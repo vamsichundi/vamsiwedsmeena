@@ -76,6 +76,12 @@
   }
   .royal-band .deity-icon .ganesha-fill{ fill: var(--gold-bright) !important; opacity:0.85; }
 
+  /* ---------- GANESHA OUTLINE (blessing band) ---------- */
+  .ganesha-outline{ width:96px; height:96px; }
+  @media (max-width:760px){
+    .ganesha-outline{ width:80px; height:80px; }
+  }
+
   /* ---------- SECTION GOLD RULE ---------- */
   .gold-rule{
     height:3px; width:80px; margin: 14px auto 0;
@@ -791,6 +797,12 @@
   footer .deity-icon path, footer .deity-icon circle, footer .deity-icon ellipse{
     stroke: var(--gold) !important;
   }
+  .vm-foot-logo{
+    width:92px; height:92px; margin:0 auto 6px; display:block;
+    filter: drop-shadow(0 3px 10px rgba(0,0,0,0.25));
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .vm-foot-logo:hover{ transform: rotate(360deg) scale(1.08); }
 
   /* ---------- FLOATING RSVP BUTTON ---------- */
   .rsvp-float{
@@ -967,8 +979,13 @@
             <path d="M56 60 L56 30 L66 50 L76 30 L76 60"/>
           </g>
           <g transform="translate(50,80)">
-            <path d="M0 0 C -7 -10 -18 -10 -18 0 C -18 6 -7 9 0 0 Z" fill="#F4D58D" opacity="0.9"/>
-            <path d="M0 0 C 7 -10 18 -10 18 0 C 18 6 7 9 0 0 Z" fill="#D4AF37" opacity="0.9"/>
+            <!-- infinity symbol -->
+            <path d="M -16 0
+                     C -16 -7, -6 -7, 0 0
+                     C 6 7, 16 7, 16 0
+                     C 16 -7, 6 -7, 0 0
+                     C -6 7, -16 7, -16 0 Z"
+                  fill="none" stroke="#F4D58D" stroke-width="3.4" stroke-linecap="round"/>
           </g>
         </svg>
         <span class="nav-greeting">Welcome! We're so glad you're here &hearts;</span>
@@ -979,6 +996,7 @@
       <li><a href="#events">Events</a></li>
       <li><a href="#venue">Venue</a></li>
       <li><a href="#travel">Travel</a></li>
+      <li><a href="#explore">Explore</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#livestream">Live Stream</a></li>
       <li><a href="#album">Photo Album</a></li>
@@ -1299,12 +1317,34 @@
 <!-- ============ ROYAL BLESSING BAND ============ -->
 <div class="royal-band">
   <div class="deity-row">
-    <svg class="deity-icon glow" viewBox="0 0 64 64" aria-hidden="true">
-      <g fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round">
-        <path d="M14 38c0-8 6-12 12-12 7 0 11 5 11 10 0 6-4 9-9 9-4 0-7-2-7-6 0-3 2-5 5-5"/>
-        <path d="M40 22c5 0 8 4 8 8s-3 7-7 7c-3 0-5-2-5-5"/>
-        <path d="M41 16c2 2 2 5 0 7"/>
-        <circle cx="46" cy="14" r="1.6" fill="#D4AF37"/>
+    <svg class="deity-icon glow ganesha-outline" viewBox="0 0 120 120" aria-label="Lord Ganesha" role="img">
+      <g fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- crown -->
+        <path d="M48 30 L52 16 L60 26 L68 16 L72 30"/>
+        <circle cx="60" cy="13" r="2.4" fill="#D4AF37"/>
+        <path d="M46 30 H74"/>
+        <!-- head -->
+        <path d="M40 40 C40 26 80 26 80 40 C80 50 74 56 60 56 C46 56 40 50 40 40 Z"/>
+        <!-- ears -->
+        <path d="M40 38 C28 36 24 48 32 54 C37 57 42 54 43 50"/>
+        <path d="M80 38 C92 36 96 48 88 54 C83 57 78 54 77 50"/>
+        <!-- tilak -->
+        <path d="M60 32 V44"/>
+        <!-- eyes -->
+        <path d="M50 42 q4 -3 8 0"/>
+        <path d="M62 42 q4 -3 8 0"/>
+        <!-- trunk curling to a modak -->
+        <path d="M60 50 C58 62 50 70 52 80 C54 88 64 90 66 82 C67 78 63 76 61 79"/>
+        <!-- tusks -->
+        <path d="M54 56 L51 62"/>
+        <path d="M66 56 L69 62"/>
+        <!-- body / shoulders -->
+        <path d="M38 70 C32 86 40 104 60 104 C80 104 88 86 82 70"/>
+        <!-- arms -->
+        <path d="M40 74 C30 78 28 90 34 96"/>
+        <path d="M80 74 C90 78 92 90 86 96"/>
+        <!-- belly accent -->
+        <ellipse cx="60" cy="86" rx="13" ry="11"/>
       </g>
     </svg>
   </div>
@@ -1365,6 +1405,75 @@
   </div>
 </section>
 
+<!-- ============ EXPLORE / THINGS TO DO ============ -->
+<section id="explore" class="events">
+  <div class="section-head">
+    <div class="section-eyebrow">Make a Weekend of It</div>
+    <h2>Explore the Area</h2>
+    <div class="gold-rule"></div>
+    <p style="max-width:620px; margin:14px auto 0; text-align:center; font-size:0.95rem; opacity:0.85;">
+      Since the celebration falls on a weekend, here are a few of our favorite scenic spots and beaches near The Woodlands &amp; Houston. Tap any card for directions.
+    </p>
+  </div>
+
+  <h3 style="text-align:center; color:var(--kumkum); font-family:'Cormorant Garamond',serif; font-size:1.6rem; margin:34px 0 18px;">Scenic Spots &amp; Urbanscapes</h3>
+  <div class="events-grid">
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=George%20Mitchell%20Nature%20Preserve&query_place_id=ChIJy0LrRgoxR4YR12xY4Zr7caM" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">The Woodlands &middot; 4.7&#9733;</div>
+      <h3>George Mitchell Nature Preserve</h3>
+      <p>Shaded hiking and biking trails winding through deep forest and quiet lakes &mdash; a peaceful escape minutes from the venue.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Statue%20of%20Union%20Hanuman&query_place_id=ChIJqRICEQDdQIYRrtVvELOWXAg" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Sugar Land &middot; 4.8&#9733;</div>
+      <h3>Hanuman Statue (Statue of Union)</h3>
+      <p>A majestic 90-foot Lord Hanuman statue at the Sri Ashtalakshmi Temple &mdash; one of the tallest in the U.S. and a deeply uplifting sight.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Gerald%20D%20Hines%20Waterwall%20Park&query_place_id=ChIJpTwf6G3BQIYRyZpTrmALPvQ" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Houston &middot; 4.7&#9733;</div>
+      <h3>Gerald D. Hines Waterwall Park</h3>
+      <p>A stunning 64-foot cascading water wall framed by oak trees near the Galleria &mdash; a favorite Houston landmark for photos.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Space%20Center%20Houston&query_place_id=ChIJLZlhwACdQIYRFvnVL8mq8BM" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Houston &middot; 4.6&#9733;</div>
+      <h3>Space Center Houston (NASA)</h3>
+      <p>The official visitor center of NASA's Johnson Space Center &mdash; real rockets, moon rocks, and interactive exhibits for all ages.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Discovery%20Green%20Downtown%20Houston&query_place_id=ChIJJUo2UyK_QIYRI_nLX1af7Qg" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Downtown Houston &middot; 4.7&#9733;</div>
+      <h3>Downtown &amp; Discovery Green</h3>
+      <p>A lively 12-acre park in the heart of downtown with lawns, water features, and events &mdash; a great base to explore the city.</p>
+    </a>
+  </div>
+
+  <h3 style="text-align:center; color:var(--kumkum); font-family:'Cormorant Garamond',serif; font-size:1.6rem; margin:42px 0 18px;">Beaches by the Coast</h3>
+  <div class="events-grid">
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Galveston%20Island%20State%20Park&query_place_id=ChIJOaB1ZVuEP4YRMo9bSFNwXVM" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Galveston &middot; 4.6&#9733;</div>
+      <h3>Galveston Island State Park</h3>
+      <p>Wild Gulf-side shoreline and calm bay waters, with trails, birding, and the island's famously soft golden sunsets.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Stewart%20Beach&query_place_id=ChIJ5ycxDbWfP4YRO8qcB5wnDRI" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Galveston &middot; 4.4&#9733;</div>
+      <h3>Stewart Beach</h3>
+      <p>A family-friendly beach with easy parking, restrooms, chair rentals, and food trucks &mdash; a classic Galveston day out.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=El%20Jardin%20Beach&query_place_id=ChIJ3al1reRjP4YRfsCF9boxmDI" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Seabrook &middot; 4.4&#9733;</div>
+      <h3>El Jardin Beach</h3>
+      <p>A quiet, scenic bay beach with free parking and lots of space to spread out &mdash; calm, clean, and wonderfully low-key.</p>
+    </a>
+    <a class="event-card" href="https://www.google.com/maps/search/?api=1&query=Moody%20Gardens&query_place_id=ChIJY47Vz1ecP4YR4hJNhlhX9AI" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="meta">Galveston &middot; 4.5&#9733;</div>
+      <h3>Moody Gardens</h3>
+      <p>A rainforest pyramid, aquarium, and seasonal attractions all in one spot &mdash; a fun outing for families and kids.</p>
+    </a>
+  </div>
+
+  <p style="text-align:center; max-width:620px; margin:34px auto 0; font-size:0.85rem; opacity:0.7; font-style:italic;">
+    Galveston's beaches are roughly a 1.5&ndash;2 hour drive south of The Woodlands &mdash; a perfect day trip to round out the weekend.
+  </p>
+</section>
+
 <!-- ============ FAQ ============ -->
 <section id="faq">
   <div class="section-head">
@@ -1394,6 +1503,26 @@
       <div class="faq-a"><p>Yes, free on-site parking is available at the Hindu Temple of Woodlands.</p></div>
     </div>
     <div class="faq-item">
+      <button class="faq-q">What time does the wedding start? <span class="plus">+</span></button>
+      <div class="faq-a"><p>The wedding ceremony begins at <strong>8:00 AM</strong>. We recommend arriving a little early so you can be seated and settled before the muhurtham begins.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">When is lunch served? <span class="plus">+</span></button>
+      <div class="faq-a"><p>Lunch is served from <strong>12:00 PM</strong> onwards, immediately following the wedding ceremony. A traditional South Indian vegetarian feast will be served.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Where is the venue? <span class="plus">+</span></button>
+      <div class="faq-a"><p>All ceremonies take place at the <strong>Hindu Temple of The Woodlands</strong> &mdash; a beautiful temple and a meaningful setting for the celebrations. Free on-site parking is available.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What is the nearest airport? <span class="plus">+</span></button>
+      <div class="faq-a"><p>The closest major airport is <strong>George Bush Intercontinental (IAH)</strong> in Houston. <strong>William P. Hobby Airport (HOU)</strong> is another convenient option on the south side of Houston.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How far is the venue from Dallas or Austin? <span class="plus">+</span></button>
+      <div class="faq-a"><p>If you're driving in: <strong>Austin</strong> is about a <strong>3-hour</strong> drive and <strong>Dallas</strong> is about a <strong>4-hour</strong> drive from The Woodlands.</p></div>
+    </div>
+    <div class="faq-item">
       <button class="faq-q">By when should I RSVP? <span class="plus">+</span></button>
       <div class="faq-a"><p>Please RSVP at your earliest convenience using the form above so we can plan seating and catering accordingly.</p></div>
     </div>
@@ -1403,67 +1532,56 @@
 <!-- ============ CONTACT / FOOTER ============ -->
 <footer id="contact">
   <div class="deity-row">
-    <svg class="deity-icon" viewBox="0 0 120 120" aria-hidden="true">
+    <!-- V & M monogram -->
+    <svg class="vm-foot-logo" viewBox="0 0 100 100" aria-label="V and M monogram" role="img">
       <defs>
-        <radialGradient id="bodyGradFoot" cx="50%" cy="40%" r="70%">
+        <linearGradient id="footLogoRed" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C0392B"/>
+          <stop offset="100%" stop-color="#7A1F1F"/>
+        </linearGradient>
+        <linearGradient id="footLogoRing" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#F4D58D"/>
-          <stop offset="100%" stop-color="#D4AF37"/>
-        </radialGradient>
+          <stop offset="50%" stop-color="#D4AF37"/>
+          <stop offset="100%" stop-color="#9A7320"/>
+        </linearGradient>
       </defs>
-      <g fill="#2A0707" opacity="0.9">
-        <ellipse cx="60" cy="108" rx="36" ry="8"/>
-        <path d="M30 106 C36 96 44 96 50 104 Z"/>
-        <path d="M90 106 C84 96 76 96 70 104 Z"/>
+      <circle cx="50" cy="50" r="40" fill="url(#footLogoRed)"/>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="url(#footLogoRing)" stroke-width="6"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#F4D58D" stroke-width="1" stroke-opacity="0.35"/>
+      <circle cx="50" cy="13" r="3" fill="#F4D58D"/>
+      <g transform="translate(50,21) scale(0.45)">
+        <path d="M-9 -4 Q0 -10 9 -4" fill="none" stroke="#F4D58D" stroke-width="3"/>
+        <path d="M0 2
+                 C -6 -4, -14 -2, -14 4
+                 C -14 10, 0 20, 0 20
+                 C 0 20, 14 10, 14 4
+                 C 14 -2, 6 -4, 0 2 Z"
+              fill="#F4D58D" stroke="#9A7320" stroke-width="1.2"/>
+        <circle cx="0" cy="6" r="2.5" fill="#C0392B"/>
       </g>
-      <g fill="#D4AF37" stroke="#2A0707" stroke-width="1">
-        <path d="M60 8 L52 26 H68 Z"/>
-        <circle cx="60" cy="8" r="3" fill="#E8722C"/>
-        <path d="M44 26 H76 L72 34 H48 Z"/>
+      <g fill="none" stroke="#FFF8EE" stroke-linejoin="round" stroke-linecap="round" stroke-width="6">
+        <path d="M22 30 L33 60 L44 30"/>
       </g>
-      <g fill="url(#bodyGradFoot)" stroke="#2A0707" stroke-width="1.2">
-        <ellipse cx="34" cy="40" rx="14" ry="18" transform="rotate(-15 34 40)"/>
-        <ellipse cx="86" cy="40" rx="14" ry="18" transform="rotate(15 86 40)"/>
+      <g fill="none" stroke="#FFF8EE" stroke-linejoin="round" stroke-linecap="round" stroke-width="6">
+        <path d="M56 60 L56 30 L66 50 L76 30 L76 60"/>
       </g>
-      <circle cx="60" cy="42" r="20" fill="url(#bodyGradFoot)" stroke="#2A0707" stroke-width="1.2"/>
-      <g fill="#2A0707">
-        <ellipse cx="52" cy="40" rx="2.2" ry="3"/>
-        <ellipse cx="68" cy="40" rx="2.2" ry="3"/>
+      <g transform="translate(50,80)">
+        <!-- infinity symbol -->
+        <path d="M -16 0
+                 C -16 -7, -6 -7, 0 0
+                 C 6 7, 16 7, 16 0
+                 C 16 -7, 6 -7, 0 0
+                 C -6 7, -16 7, -16 0 Z"
+              fill="none" stroke="#F4D58D" stroke-width="3.4" stroke-linecap="round"/>
       </g>
-      <path d="M60 30 L57 36 L63 36 Z" fill="#E8722C"/>
-      <path d="M56 50 C50 60 52 72 62 76 C70 79 76 74 74 68 C72 64 67 65 68 70" fill="none" stroke="#2A0707" stroke-width="6" stroke-linecap="round"/>
-      <path d="M68 48 L74 54" stroke="#FFF8EE" stroke-width="3" stroke-linecap="round"/>
-      <path d="M38 60 C34 80 42 100 60 100 C78 100 86 80 82 60 C78 50 42 50 38 60 Z" fill="url(#bodyGradFoot)" stroke="#2A0707" stroke-width="1.2"/>
-      <ellipse cx="60" cy="80" rx="14" ry="12" fill="#E8722C" opacity="0.35"/>
-    </svg>
-    <svg class="deity-icon om-spin" viewBox="0 0 64 64" aria-hidden="true">
-      <g fill="none" stroke="#D4AF37" stroke-width="2.4" stroke-linecap="round">
-        <path d="M14 38c0-8 6-12 12-12 7 0 11 5 11 10 0 6-4 9-9 9-4 0-7-2-7-6 0-3 2-5 5-5"/>
-        <path d="M40 22c5 0 8 4 8 8s-3 7-7 7c-3 0-5-2-5-5"/>
-        <path d="M41 16c2 2 2 5 0 7"/>
-        <circle cx="46" cy="14" r="1.6" fill="#D4AF37"/>
-      </g>
-    </svg>
-    <svg class="deity-icon" viewBox="0 0 120 120" aria-hidden="true">
-      <g fill="#E8722C" opacity="0.9">
-        <path d="M60 60 C60 30 40 18 30 30 C25 42 40 58 60 60 Z"/>
-        <path d="M60 60 C60 30 80 18 90 30 C95 42 80 58 60 60 Z"/>
-        <path d="M60 60 C30 60 18 80 30 90 C42 95 58 80 60 60 Z"/>
-        <path d="M60 60 C90 60 102 80 90 90 C78 95 62 80 60 60 Z"/>
-      </g>
-      <g fill="#D4AF37" stroke="#2A0707" stroke-width="1">
-        <path d="M60 60 C60 40 48 32 42 40 C38 48 48 58 60 60 Z"/>
-        <path d="M60 60 C60 40 72 32 78 40 C82 48 72 58 60 60 Z"/>
-        <path d="M60 60 C40 60 32 72 40 78 C48 82 58 72 60 60 Z"/>
-        <path d="M60 60 C80 60 88 72 80 78 C72 82 62 72 60 60 Z"/>
-      </g>
-      <circle cx="60" cy="60" r="10" fill="#2A0707"/>
-      <circle cx="60" cy="60" r="5" fill="#D4AF37"/>
     </svg>
   </div>
   <h2>Vamsikrishna Chundi &amp; Meenakshi Vutla</h2>
   <p class="contact-line">For any questions, please reach out:</p>
   <p class="contact-line">&#9742; <a href="tel:+18456331264">+1 (845) 633-1264</a></p>
   <p class="contact-line">&#9993; <a href="mailto:chundi.vamsikrishna@gmail.com">chundi.vamsikrishna@gmail.com</a></p>
+  <p class="contact-line" style="margin-top:14px;">For more info, you can also reach our friend:</p>
+  <p class="contact-line">Venukumar Nadimpalli &middot; &#9742; <a href="tel:+14099806777">+1 (409) 980-6777</a></p>
 
   <div class="motif-divider">
     <div class="line"></div>
@@ -1550,7 +1668,14 @@
     })
       .then((response) => {
         if (response.ok) {
-          msg.textContent = "Thank you! Your RSVP has been received. We can't wait to celebrate with you!";
+          const attending = (formData.get('attending') || '').toString();
+          const firstName = (formData.get('name') || '').toString().trim().split(' ')[0];
+          const namePart = firstName ? (', ' + firstName) : '';
+          if (attending === 'no') {
+            msg.textContent = "Thank you for letting us know" + namePart + ". We'll miss you, but we're grateful for your blessings! \uD83D\uDC9B";
+          } else {
+            msg.textContent = "Thank you" + namePart + "! Your RSVP has been received. We can't wait to celebrate with you! A confirmation will be on its way to your email shortly. \uD83D\uDC9B";
+          }
           msg.className = 'success';
           msg.style.display = 'block';
           form.reset();
