@@ -1573,20 +1573,38 @@
   const audio = document.getElementById('bgAudio');
   const audioBtn = document.getElementById('audioToggle');
   let playing = false;
-  audioBtn.addEventListener('click', () => {
-    if(playing){
-      audio.pause();
-      audioBtn.classList.remove('playing');
-      audioBtn.setAttribute('aria-pressed','false');
-      audioBtn.setAttribute('aria-label','Play background music');
-    } else {
-      audio.play().catch(()=>{});
+
+  function startAudio(){
+    audio.play().then(() => {
+      playing = true;
       audioBtn.classList.add('playing');
       audioBtn.setAttribute('aria-pressed','true');
       audioBtn.setAttribute('aria-label','Pause background music');
-    }
-    playing = !playing;
+    }).catch(()=>{});
+  }
+  function stopAudio(){
+    audio.pause();
+    playing = false;
+    audioBtn.classList.remove('playing');
+    audioBtn.setAttribute('aria-pressed','false');
+    audioBtn.setAttribute('aria-label','Play background music');
+  }
+
+  audioBtn.addEventListener('click', () => {
+    if(playing){ stopAudio(); } else { startAudio(); }
   });
+
+  // ---- Auto-start music on first scroll down ----
+  let scrollStarted = false;
+  function onFirstScroll(){
+    if(scrollStarted) return;
+    if(window.scrollY > 40){
+      scrollStarted = true;
+      startAudio();
+      window.removeEventListener('scroll', onFirstScroll);
+    }
+  }
+  window.addEventListener('scroll', onFirstScroll, { passive:true });
 
   // ---- Live visitor counter ----
   // Uses the free CountAPI service (countapi.xyz) so the count is shared across all visitors.
