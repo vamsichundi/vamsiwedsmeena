@@ -93,7 +93,7 @@
     stroke:var(--gold); stroke-width:1.4; fill:none;
   }
 
-  /* ---------- FLOATING FLOWERS, GRAINS, BUTTERFLIES & SWANS ---------- */
+  /* ---------- FLOATING FLOWERS, GRAINS & HEARTS ---------- */
   .petals{
     position:fixed; inset:0; pointer-events:none; z-index:5; overflow:hidden;
   }
@@ -107,27 +107,6 @@
     0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
     8%{ opacity:0.85; }
     100%{ transform: translateY(110vh) translateX(var(--drift, 40px)) rotate(280deg); opacity:0; }
-  }
-
-  .flyer{
-    position:absolute;
-    left:-10%;
-    animation: flyer-pass linear infinite;
-    opacity:0.85;
-  }
-  .flyer svg{ display:block; width:100%; height:100%; }
-  .flyer-inner{
-    animation: flyer-bob ease-in-out infinite alternate;
-  }
-  @keyframes flyer-pass{
-    0%{ transform: translateX(0); opacity:0; }
-    6%{ opacity:0.9; }
-    94%{ opacity:0.9; }
-    100%{ transform: translateX(120vw); opacity:0; }
-  }
-  @keyframes flyer-bob{
-    0%{ transform: translateY(0) rotate(-4deg); }
-    100%{ transform: translateY(-22px) rotate(4deg); }
   }
 
   /* ---------- DEITY MOTIF (Ganesha + Balaji line-art) ---------- */
@@ -1233,55 +1212,22 @@
         </g>
       </svg>`;
 
-    // Butterfly: two pairs of wings with a small body
-    const butterflySVG = (color) => `
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <g fill="${color}">
-          <path d="M12 12 C12 5 4 2 3 7 C2 11 7 13 12 12 Z"/>
-          <path d="M12 12 C12 5 20 2 21 7 C22 11 17 13 12 12 Z"/>
-          <path d="M12 12 C12 17 6 21 4 18 C2 15 7 12 12 12 Z" opacity="0.85"/>
-          <path d="M12 12 C12 17 18 21 20 18 C22 15 17 12 12 12 Z" opacity="0.85"/>
-          <ellipse cx="12" cy="12" rx="1.2" ry="6" fill="#8B1A1A"/>
-        </g>
-      </svg>`;
-
-    // Love symbol: simple heart
-    const heartSVG = (color) => `
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path fill="${color}" d="M12 21 C12 21 2 14 2 7.5 C2 4 4.5 2 7.5 2 C9.8 2 11.3 3.3 12 4.8 C12.7 3.3 14.2 2 16.5 2 C19.5 2 22 4 22 7.5 C22 14 12 21 12 21 Z"/>
-      </svg>`;
-
-    // Swan: simple side-profile silhouette
-    const swanSVG = (color) => `
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <g fill="${color}" stroke="#C9962E" stroke-width="0.5">
-          <path d="M3 18 C3 12 8 8 13 9 C13 9 11 6 14 4 C16.5 2.3 19 4 18.5 6.5 C18.2 8 16.5 8.5 16.5 8.5 C19 9.5 21 12 21 16 C21 17.5 19.5 18 18 18 L3 18 Z"/>
-          <circle cx="17" cy="5.5" r="1" fill="#8B1A1A" stroke="none"/>
-        </g>
-      </svg>`;
-
     const flowerColors = ['#E8722C', '#F4B860', '#D4AF37'];
     const grainColors = ['#F4D58D', '#E8C97A', '#FCEFC7'];
-    const butterflyColors = ['#E8722C', '#C9962E', '#D4878B', '#F4B860'];
-    const heartColors = ['#C0392B', '#E8722C', '#D4878B'];
-    const swanColors = ['#FFF8EE', '#F4D58D', '#FCEFC7'];
 
-    // Falling: flowers, grains, hearts
+    // Falling: flowers and grains
     const fallCount = window.innerWidth < 700 ? 16 : 28;
     for(let i=0; i<fallCount; i++){
       const p = document.createElement('div');
       p.className = 'petal';
-      const r = Math.random();
+      const isFlower = Math.random() < 0.55;
       let svgFn, color, size;
-      if(r < 0.4){
+      if(isFlower){
         svgFn = flowerSVG; color = flowerColors[Math.floor(Math.random()*flowerColors.length)];
         size = 14 + Math.random()*10;
-      } else if(r < 0.75){
+      } else {
         svgFn = grainSVG; color = grainColors[Math.floor(Math.random()*grainColors.length)];
         size = 8 + Math.random()*8;
-      } else {
-        svgFn = heartSVG; color = heartColors[Math.floor(Math.random()*heartColors.length)];
-        size = 12 + Math.random()*8;
       }
       p.style.width = size + 'px';
       p.style.height = size + 'px';
@@ -1291,37 +1237,6 @@
       p.style.animationDuration = (12 + Math.random()*14) + 's';
       p.style.animationDelay = (Math.random()*-20) + 's';
       container.appendChild(p);
-    }
-
-    // Flying left-to-right: butterflies and swans
-    const flyCount = window.innerWidth < 700 ? 4 : 8;
-    for(let i=0; i<flyCount; i++){
-      const wrap = document.createElement('div');
-      wrap.className = 'flyer';
-      const isSwan = Math.random() < 0.35;
-      let svgFn, color, size;
-      if(isSwan){
-        svgFn = swanSVG; color = swanColors[Math.floor(Math.random()*swanColors.length)];
-        size = 26 + Math.random()*16;
-      } else {
-        svgFn = butterflySVG; color = butterflyColors[Math.floor(Math.random()*butterflyColors.length)];
-        size = 20 + Math.random()*14;
-      }
-      wrap.style.width = size + 'px';
-      wrap.style.height = size + 'px';
-      wrap.style.top = (5 + Math.random()*70) + 'vh';
-      wrap.style.animationDuration = (18 + Math.random()*16) + 's';
-      wrap.style.animationDelay = (Math.random()*-30) + 's';
-
-      const inner = document.createElement('div');
-      inner.className = 'flyer-inner';
-      inner.style.width = '100%';
-      inner.style.height = '100%';
-      inner.style.animationDuration = (1.2 + Math.random()*0.8) + 's';
-      inner.innerHTML = svgFn(color);
-
-      wrap.appendChild(inner);
-      container.appendChild(wrap);
     }
   })();
 </script>
