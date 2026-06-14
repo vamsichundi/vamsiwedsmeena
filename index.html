@@ -746,6 +746,12 @@
   #rsvp-msg{
     margin-top:16px; text-align:center; font-size:0.9rem; color:var(--kumkum); display:none;
   }
+  #rsvp-msg.success{ color:#3D6B4F; font-weight:600; }
+  #rsvp-msg.error{ color:var(--kumkum); font-weight:600; }
+  .hidden-field{
+    position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;
+  }
+  .rsvp-submit:disabled{ opacity:0.6; cursor:not-allowed; }
 
   /* ---------- FAQ ---------- */
   .faq-item{
@@ -1314,7 +1320,14 @@
     <div class="gold-rule"></div>
   </div>
   <div class="rsvp-card">
-    <form id="rsvpForm" netlify>
+    <form id="rsvpForm" name="rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <!-- Required for Netlify Forms -->
+      <input type="hidden" name="form-name" value="rsvp">
+      <!-- Honeypot field for spam protection (kept hidden from real users) -->
+      <p class="hidden-field" aria-hidden="true">
+        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+      </p>
+
       <div class="field-row">
         <div class="field">
           <label for="name">Full Name</label>
@@ -1512,14 +1525,44 @@
   });
 
   // ---- RSVP form ----
-  // NOTE: This demo just shows a confirmation message. To actually collect RSVPs,
-  // connect this form to a service like Google Forms, Formspree, or a simple backend.
+  // RSVP form submission via Netlify Forms (AJAX, no page reload)
   document.getElementById('rsvpForm').addEventListener('submit', function(e){
     e.preventDefault();
+    const form = this;
     const msg = document.getElementById('rsvp-msg');
-    msg.style.display = 'block';
-    msg.textContent = 'Thank you! Your RSVP has been received. We can\'t wait to celebrate with you!';
-    this.reset();
+    const submitBtn = form.querySelector('.rsvp-submit');
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    msg.style.display = 'none';
+    msg.className = '';
+
+    const formData = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    })
+      .then((response) => {
+        if (response.ok) {
+          msg.textContent = "Thank you! Your RSVP has been received. We can't wait to celebrate with you!";
+          msg.className = 'success';
+          msg.style.display = 'block';
+          form.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(() => {
+        msg.textContent = "Sorry, something went wrong submitting your RSVP. Please try again, or email us directly.";
+        msg.className = 'error';
+        msg.style.display = 'block';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send RSVP';
+      });
   });
 
   // ---- Background audio toggle ----
