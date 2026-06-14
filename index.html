@@ -1240,13 +1240,13 @@
     <div class="livestream-card">
       <div class="livestream-status"><span class="dot"></span> Live on the wedding day</div>
       <h3>Watch the ceremony live</h3>
-      <p>We'll be streaming the wedding Muhurtham live for family and friends who can't join us in person. The link will be active starting the morning of Aug 16, 2026.</p>
-      <a href="#" class="btn btn-primary" style="border-color:var(--gold-bright); color:var(--turmeric); background:var(--kumkum);">Open Live Stream</a>
-      <p style="margin-top:16px; font-size:0.8rem; opacity:0.7;">Link will be added here closer to the date.</p>
+      <p>We'll be streaming the wedding Muhurtham live for family and friends who can't join us in person.</p>
+      <a id="livestreamBtn" href="#" class="btn btn-primary" style="border-color:var(--gold-bright); color:var(--turmeric); background:var(--kumkum);">Open Live Stream</a>
+      <p id="livestreamNote" style="margin-top:16px; font-size:0.8rem; opacity:0.7;">The live link is shared about 2&ndash;3 hours before the ceremony. Please check back on the morning of Aug 16, 2026.</p>
     </div>
     <div style="text-align:center;">
-      <!-- QR code placeholder for the live stream URL -->
-      <div class="qr-placeholder" aria-hidden="true">
+      <!-- QR code: auto-generated from the live stream URL once it's set -->
+      <div class="qr-placeholder" id="qrPlaceholder" aria-hidden="true">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g fill="#5A0E0E">
             <rect x="0"  y="0"  width="28" height="28"/>
@@ -1285,7 +1285,7 @@
           </g>
         </svg>
       </div>
-      <div class="qr-caption">Scan for live stream</div>
+      <div class="qr-caption" id="qrCaption">QR code appears once the stream is live</div>
     </div>
   </div>
 </section>
@@ -1608,6 +1608,52 @@
 <button class="audio-toggle" id="audioToggle" aria-label="Play background music" aria-pressed="false">&#9835;</button>
 
 <script>
+  /* ============================================================
+     LIVE STREAM LINK  ——  EDIT THIS ON THE WEDDING MORNING
+     ------------------------------------------------------------
+     You'll receive the live link about 2–3 hours before the
+     ceremony. When you get it, paste it between the quotes below,
+     save, and re-publish. The button and QR code turn on
+     automatically. Leave it empty ("") until then.
+     Example: const LIVESTREAM_URL = "https://youtube.com/live/xxxx";
+     ============================================================ */
+  const LIVESTREAM_URL = "";
+
+  (function setupLivestream(){
+    const btn = document.getElementById('livestreamBtn');
+    const note = document.getElementById('livestreamNote');
+    const qrBox = document.getElementById('qrPlaceholder');
+    const qrCaption = document.getElementById('qrCaption');
+    if(!btn) return;
+
+    const url = (LIVESTREAM_URL || '').trim();
+    if(url){
+      // Link is live
+      btn.href = url;
+      btn.target = '_blank';
+      btn.rel = 'noopener';
+      btn.style.pointerEvents = 'auto';
+      btn.style.opacity = '1';
+      btn.textContent = 'Open Live Stream';
+      if(note){ note.textContent = "We're live! Tap the button above or scan the QR code to watch."; }
+      if(qrBox){
+        // Generate a real QR from the live URL (no library needed)
+        qrBox.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='
+          + encodeURIComponent(url)
+          + '" alt="Live stream QR code" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
+      }
+      if(qrCaption){ qrCaption.textContent = 'Scan to watch the live stream'; }
+    } else {
+      // Link not yet available
+      btn.removeAttribute('href');
+      btn.style.pointerEvents = 'none';
+      btn.style.opacity = '0.55';
+      btn.style.cursor = 'default';
+      btn.textContent = 'Live link coming soon';
+      btn.setAttribute('aria-disabled', 'true');
+    }
+  })();
+
   // ---- Mobile nav ----
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
