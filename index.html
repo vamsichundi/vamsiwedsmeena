@@ -158,9 +158,23 @@
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--gold-soft);
   }
+  .nav-mango{
+    position:absolute;
+    top:0;
+    width:90px; height:64px;
+    pointer-events:none;
+    z-index:1;
+  }
+  .nav-mango.left{ left:8px; }
+  .nav-mango.right{ right:8px; transform:scaleX(-1); }
+  .nav-mango svg{ display:block; width:100%; height:100%; }
+  @media (max-width:760px){
+    .nav-mango{ width:56px; height:42px; }
+  }
   .nav-inner{
     max-width:1100px; margin:0 auto; padding:14px 24px;
     display:flex; align-items:center; justify-content:space-between;
+    position:relative; z-index:2;
   }
   .nav-logo{
     font-family:'Cormorant Garamond', serif;
@@ -605,6 +619,49 @@
 
 <!-- ============ NAV ============ -->
 <nav>
+  <!-- Mango leaf garland (toranam) corners -->
+  <div class="nav-mango left" aria-hidden="true">
+    <svg viewBox="0 0 90 64" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 6 C 20 0, 50 0, 90 10" fill="none" stroke="#5A0E0E" stroke-width="2"/>
+      <g fill="#3D6B4F">
+        <path d="M8 7  C 4 16, 6 26, 12 28 C 14 18, 12 9, 8 7 Z"/>
+        <path d="M22 8 C 18 18, 20 30, 27 33 C 29 21, 26 11, 22 8 Z"/>
+        <path d="M36 9 C 32 20, 35 33, 42 36 C 44 23, 41 12, 36 9 Z"/>
+        <path d="M50 10 C 46 22, 49 35, 56 38 C 58 25, 55 13, 50 10 Z"/>
+        <path d="M64 10 C 61 21, 64 33, 70 36 C 72 24, 69 13, 64 10 Z"/>
+        <path d="M76 9 C 74 18, 76 28, 81 31 C 83 21, 81 12, 76 9 Z"/>
+      </g>
+      <g fill="#2A4F39">
+        <path d="M12 28 C 14 18, 12 9, 8 7 C 9 17, 10 23, 12 28 Z" opacity="0.5"/>
+        <path d="M27 33 C 29 21, 26 11, 22 8 C 24 19, 25 27, 27 33 Z" opacity="0.5"/>
+        <path d="M42 36 C 44 23, 41 12, 36 9 C 38 21, 40 30, 42 36 Z" opacity="0.5"/>
+        <path d="M56 38 C 58 25, 55 13, 50 10 C 52 23, 54 32, 56 38 Z" opacity="0.5"/>
+        <path d="M70 36 C 72 24, 69 13, 64 10 C 66 22, 68 31, 70 36 Z" opacity="0.5"/>
+        <path d="M81 31 C 83 21, 81 12, 76 9 C 78 18, 80 25, 81 31 Z" opacity="0.5"/>
+      </g>
+    </svg>
+  </div>
+  <div class="nav-mango right" aria-hidden="true">
+    <svg viewBox="0 0 90 64" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 6 C 20 0, 50 0, 90 10" fill="none" stroke="#5A0E0E" stroke-width="2"/>
+      <g fill="#3D6B4F">
+        <path d="M8 7  C 4 16, 6 26, 12 28 C 14 18, 12 9, 8 7 Z"/>
+        <path d="M22 8 C 18 18, 20 30, 27 33 C 29 21, 26 11, 22 8 Z"/>
+        <path d="M36 9 C 32 20, 35 33, 42 36 C 44 23, 41 12, 36 9 Z"/>
+        <path d="M50 10 C 46 22, 49 35, 56 38 C 58 25, 55 13, 50 10 Z"/>
+        <path d="M64 10 C 61 21, 64 33, 70 36 C 72 24, 69 13, 64 10 Z"/>
+        <path d="M76 9 C 74 18, 76 28, 81 31 C 83 21, 81 12, 76 9 Z"/>
+      </g>
+      <g fill="#2A4F39">
+        <path d="M12 28 C 14 18, 12 9, 8 7 C 9 17, 10 23, 12 28 Z" opacity="0.5"/>
+        <path d="M27 33 C 29 21, 26 11, 22 8 C 24 19, 25 27, 27 33 Z" opacity="0.5"/>
+        <path d="M42 36 C 44 23, 41 12, 36 9 C 38 21, 40 30, 42 36 Z" opacity="0.5"/>
+        <path d="M56 38 C 58 25, 55 13, 50 10 C 52 23, 54 32, 56 38 Z" opacity="0.5"/>
+        <path d="M70 36 C 72 24, 69 13, 64 10 C 66 22, 68 31, 70 36 Z" opacity="0.5"/>
+        <path d="M81 31 C 83 21, 81 12, 76 9 C 78 18, 80 25, 81 31 Z" opacity="0.5"/>
+      </g>
+    </svg>
+  </div>
   <div class="nav-inner">
     <div class="nav-logo">
       <div class="nav-logo-wrap">
@@ -1229,10 +1286,10 @@
       p.className = 'petal';
       const r = Math.random();
       let svgFn, color, size;
-      if(r < 0.4){
+      if(r < 0.35){
         svgFn = flowerSVG; color = flowerColors[Math.floor(Math.random()*flowerColors.length)];
         size = 14 + Math.random()*10;
-      } else if(r < 0.75){
+      } else if(r < 0.65){
         svgFn = grainSVG; color = grainColors[Math.floor(Math.random()*grainColors.length)];
         size = 8 + Math.random()*8;
       } else {
