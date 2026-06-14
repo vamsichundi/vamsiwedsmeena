@@ -1212,22 +1212,32 @@
         </g>
       </svg>`;
 
+    // Love symbol: simple heart
+    const heartSVG = (color) => `
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path fill="${color}" d="M12 21 C12 21 2 14 2 7.5 C2 4 4.5 2 7.5 2 C9.8 2 11.3 3.3 12 4.8 C12.7 3.3 14.2 2 16.5 2 C19.5 2 22 4 22 7.5 C22 14 12 21 12 21 Z"/>
+      </svg>`;
+
     const flowerColors = ['#E8722C', '#F4B860', '#D4AF37'];
     const grainColors = ['#F4D58D', '#E8C97A', '#FCEFC7'];
+    const heartColors = ['#C0392B', '#E8722C', '#D4878B'];
 
-    // Falling: flowers and grains
+    // Falling: flowers, grains, and hearts
     const fallCount = window.innerWidth < 700 ? 16 : 28;
     for(let i=0; i<fallCount; i++){
       const p = document.createElement('div');
       p.className = 'petal';
-      const isFlower = Math.random() < 0.55;
+      const r = Math.random();
       let svgFn, color, size;
-      if(isFlower){
+      if(r < 0.4){
         svgFn = flowerSVG; color = flowerColors[Math.floor(Math.random()*flowerColors.length)];
         size = 14 + Math.random()*10;
-      } else {
+      } else if(r < 0.75){
         svgFn = grainSVG; color = grainColors[Math.floor(Math.random()*grainColors.length)];
         size = 8 + Math.random()*8;
+      } else {
+        svgFn = heartSVG; color = heartColors[Math.floor(Math.random()*heartColors.length)];
+        size = 12 + Math.random()*8;
       }
       p.style.width = size + 'px';
       p.style.height = size + 'px';
