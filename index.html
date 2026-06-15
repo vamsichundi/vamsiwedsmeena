@@ -804,6 +804,24 @@
   }
   .vm-foot-logo:hover{ transform: rotate(360deg) scale(1.08); }
 
+  /* ---------- FOOTER QR (centered) ---------- */
+  .footer-qr{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    background:var(--ivory); border:2px solid var(--gold-bright);
+    border-radius:12px; padding:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    width:max-content; margin:0 auto;
+  }
+  .footer-qr .qr-img{
+    width:108px; height:108px; background:#fff; border-radius:6px;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .footer-qr .qr-img img, .footer-qr .qr-img canvas{ width:100%; height:100%; }
+  .footer-qr span{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:0.8rem; color:var(--maroon); letter-spacing:0.5px;
+  }
+
   /* ---------- FLOATING RSVP BUTTON ---------- */
   .rsvp-float{
     position:fixed; bottom:24px; right:24px; z-index:60;
@@ -840,6 +858,46 @@
   }
   @media (max-width:480px){
     .audio-toggle{ bottom:88px; right:18px; }
+  }
+
+  /* ---------- LIVE STREAM (floating, above audio) ---------- */
+  .live-float{
+    position:fixed; bottom:160px; right:24px; z-index:60;
+    width:56px; height:56px; border-radius:50%;
+    background:var(--kumkum); color:var(--turmeric);
+    border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; text-decoration:none;
+    box-shadow:0 6px 18px rgba(139,26,26,0.35);
+    transition:transform 0.25s, opacity 0.25s;
+  }
+  .live-float svg{ width:26px; height:26px; }
+  .live-float:hover{ transform:scale(1.08); }
+  .live-float.is-live{ animation:livePulse 1.8s infinite; }
+  .live-float[aria-disabled="true"]{ opacity:0.5; cursor:default; }
+  .live-float .live-dot{
+    position:absolute; top:6px; right:6px;
+    width:11px; height:11px; border-radius:50%;
+    background:#E8722C; border:2px solid var(--turmeric);
+    display:none;
+  }
+  .live-float.is-live .live-dot{ display:block; }
+  @keyframes livePulse{
+    0%,100%{box-shadow:0 6px 18px rgba(139,26,26,0.35);}
+    50%{box-shadow:0 6px 26px rgba(232,114,44,0.7);}
+  }
+  /* Tooltip label */
+  .live-float .live-tip{
+    position:absolute; right:calc(100% + 12px); top:50%; transform:translateY(-50%);
+    background:var(--maroon); color:var(--turmeric);
+    padding:6px 12px; border-radius:8px; white-space:nowrap;
+    font-family:'Cormorant Garamond', serif; font-size:0.85rem; font-style:italic;
+    border:1px solid var(--gold-bright);
+    opacity:0; visibility:hidden; transition:opacity 0.25s; pointer-events:none;
+  }
+  .live-float:hover .live-tip{ opacity:1; visibility:visible; }
+  @media (max-width:480px){
+    .live-float{ bottom:152px; right:18px; }
   }
 
   /* reduced motion */
@@ -998,7 +1056,7 @@
       <li><a href="#travel">Travel</a></li>
       <li><a href="#explore">Explore</a></li>
       <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#livestream">Live Stream</a></li>
+      <li><a href="#livestream">Live</a></li>
       <li><a href="#album">Photo Album</a></li>
       <li><a href="#rsvp">RSVP</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -1239,10 +1297,10 @@
   <div class="livestream-wrap">
     <div class="livestream-card">
       <div class="livestream-status"><span class="dot"></span> Live on the wedding day</div>
-      <h3>Watch the ceremony live</h3>
+      <h3>Watch the event live</h3>
       <p>We'll be streaming the wedding Muhurtham live for family and friends who can't join us in person.</p>
       <a id="livestreamBtn" href="#" class="btn btn-primary" style="border-color:var(--gold-bright); color:var(--turmeric); background:var(--kumkum);">Open Live Stream</a>
-      <p id="livestreamNote" style="margin-top:16px; font-size:0.8rem; opacity:0.7;">The live link is shared about 2&ndash;3 hours before the ceremony. Please check back on the morning of Aug 16, 2026.</p>
+      <p id="livestreamNote" style="margin-top:16px; font-size:0.8rem; opacity:0.7;">The live link is shared about 2&ndash;3 hours before the event. Please check back on the morning of Aug 16, 2026.</p>
     </div>
     <div style="text-align:center;">
       <!-- QR code: auto-generated from the live stream URL once it's set -->
@@ -1589,6 +1647,17 @@
     <div class="line"></div>
   </div>
 
+  <div class="footer-qr">
+    <div class="qr-img" id="footerQr"></div>
+    <span>Scan to visit &amp; share</span>
+  </div>
+
+  <div class="motif-divider">
+    <div class="line"></div>
+    <svg class="kalasham-icon" viewBox="0 0 48 48"><path d="M24 6 L18 16 H30 Z" stroke="#C9962E"/><ellipse cx="24" cy="26" rx="12" ry="14" stroke="#C9962E"/><path d="M14 26 H34" stroke="#C9962E"/></svg>
+    <div class="line"></div>
+  </div>
+
   <div class="visitor-counter" id="visitorCounter">
     <span class="dot"></span>
     <span><span class="num" id="visitorCount">&hellip;</span> people have visited this page</span>
@@ -1605,28 +1674,42 @@
 <audio id="bgAudio" loop preload="none">
   <source src="audio/wedding-song.mp3" type="audio/mpeg">
 </audio>
+<a href="#livestream" class="live-float" id="liveFloat" aria-label="Live stream" aria-disabled="true">
+  <span class="live-dot"></span>
+  <span class="live-tip" id="liveFloatTip">Live link coming soon</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="2" y="6" width="13" height="12" rx="2"/>
+    <path d="M15 10 L22 7 V17 L15 14 Z"/>
+  </svg>
+</a>
 <button class="audio-toggle" id="audioToggle" aria-label="Play background music" aria-pressed="false">&#9835;</button>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   /* ============================================================
-     LIVE STREAM LINK  ——  EDIT THIS ON THE WEDDING MORNING
+     LIVE STREAM LINK
      ------------------------------------------------------------
-     You'll receive the live link about 2–3 hours before the
-     ceremony. When you get it, paste it between the quotes below,
-     save, and re-publish. The button and QR code turn on
-     automatically. Leave it empty ("") until then.
-     Example: const LIVESTREAM_URL = "https://youtube.com/live/xxxx";
-     ============================================================ */
-  const LIVESTREAM_URL = "";
+     You DON'T edit this file on the wedding day.
+     Instead, open  livestream.json  (next to this index.html),
+     paste the link into the "url" field, save, and re-publish.
+     The button + QR code turn on automatically. Guests just
+     refresh the page. Until then it shows "coming soon".
 
-  (function setupLivestream(){
+     Example livestream.json:
+       { "url": "https://youtube.com/live/xxxx" }
+     ============================================================ */
+
+  function activateLivestream(url){
     const btn = document.getElementById('livestreamBtn');
     const note = document.getElementById('livestreamNote');
     const qrBox = document.getElementById('qrPlaceholder');
     const qrCaption = document.getElementById('qrCaption');
+    const liveFloat = document.getElementById('liveFloat');
+    const liveFloatTip = document.getElementById('liveFloatTip');
     if(!btn) return;
 
-    const url = (LIVESTREAM_URL || '').trim();
+    url = (url || '').trim();
+
     if(url){
       // Link is live
       btn.href = url;
@@ -1634,15 +1717,26 @@
       btn.rel = 'noopener';
       btn.style.pointerEvents = 'auto';
       btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      btn.removeAttribute('aria-disabled');
       btn.textContent = 'Open Live Stream';
       if(note){ note.textContent = "We're live! Tap the button above or scan the QR code to watch."; }
       if(qrBox){
-        // Generate a real QR from the live URL (no library needed)
         qrBox.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='
           + encodeURIComponent(url)
           + '" alt="Live stream QR code" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
       }
       if(qrCaption){ qrCaption.textContent = 'Scan to watch the live stream'; }
+      // Floating camera button -> opens the live stream directly
+      if(liveFloat){
+        liveFloat.href = url;
+        liveFloat.target = '_blank';
+        liveFloat.rel = 'noopener';
+        liveFloat.classList.add('is-live');
+        liveFloat.removeAttribute('aria-disabled');
+        liveFloat.setAttribute('aria-label', 'Watch the live stream');
+        if(liveFloatTip){ liveFloatTip.textContent = "We're live \u2014 watch now"; }
+      }
     } else {
       // Link not yet available
       btn.removeAttribute('href');
@@ -1651,8 +1745,23 @@
       btn.style.cursor = 'default';
       btn.textContent = 'Live link coming soon';
       btn.setAttribute('aria-disabled', 'true');
+      // Floating camera button -> just scrolls to the section
+      if(liveFloat){
+        liveFloat.href = '#livestream';
+        liveFloat.removeAttribute('target');
+        liveFloat.classList.remove('is-live');
+        liveFloat.setAttribute('aria-disabled', 'true');
+        liveFloat.setAttribute('aria-label', 'Live stream');
+        if(liveFloatTip){ liveFloatTip.textContent = 'Live link coming soon'; }
+      }
     }
-  })();
+  }
+
+  // Fetch the link from livestream.json (cache-busted so updates show up fast)
+  fetch('livestream.json?_=' + Date.now(), { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : { url: '' })
+    .then(data => activateLivestream(data && data.url))
+    .catch(() => activateLivestream(''));
 
   // ---- Mobile nav ----
   const navToggle = document.getElementById('navToggle');
@@ -1868,6 +1977,19 @@
       p.style.animationDuration = (12 + Math.random()*14) + 's';
       p.style.animationDelay = (Math.random()*-20) + 's';
       container.appendChild(p);
+    }
+  })();
+
+  // ---- Footer QR code (site link) ----
+  (function(){
+    var el = document.getElementById('footerQr');
+    if(el && typeof QRCode !== 'undefined'){
+      new QRCode(el, {
+        text: 'https://vamsiwedsmeena.netlify.app/',
+        width: 108, height: 108,
+        colorDark: '#5A0E0E', colorLight: '#FFF8EE',
+        correctLevel: QRCode.CorrectLevel.H
+      });
     }
   })();
 </script>
