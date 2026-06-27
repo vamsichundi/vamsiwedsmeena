@@ -2024,13 +2024,15 @@
           const attending = (formData.get('attending') || '').toString();
           const firstName = (formData.get('name') || '').toString().trim().split(' ')[0];
           const namePart = firstName ? (', ' + firstName) : '';
+          let mainMsg = '';
           if (attending === 'no') {
-            msg.textContent = "Thank you for letting us know" + namePart + ". We'll miss you, but we're grateful for your blessings! \uD83D\uDC9B";
+            mainMsg = "Thank you for letting us know" + namePart + ". We'll miss you, but we're grateful for your blessings! \uD83D\uDC9B";
           } else if (attending === 'maybe') {
-            msg.textContent = "Thank you" + namePart + "! We've noted your response. Please do let us know as soon as you can so we can plan accordingly. \uD83D\uDC9B";
+            mainMsg = "Thank you" + namePart + "! We've noted your response. Please do let us know as soon as you can so we can plan accordingly. \uD83D\uDC9B";
           } else {
-            msg.textContent = "Thank you" + namePart + "! Your RSVP has been received. We can't wait to celebrate with you! A confirmation will be on its way to your email shortly. \uD83D\uDC9B";
+            mainMsg = "Thank you" + namePart + "! Your RSVP has been received. We can't wait to celebrate with you! A confirmation will be on its way to your email shortly. \uD83D\uDC9B";
           }
+          msg.innerHTML = mainMsg + '<br><span style="font-size:0.82rem;font-weight:400;opacity:0.75;">Please check your Spam or Promotions folder if you don\'t see the confirmation email in your inbox.</span>';
           msg.className = 'success';
           msg.style.display = 'block';
           form.reset();

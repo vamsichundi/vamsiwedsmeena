@@ -99,6 +99,9 @@ function guestHtml({ name, attending }) {
     <p style="font-size:15px;color:#3D0C0C;text-align:center;margin:32px 0 0;font-family:Arial,sans-serif;">
       With love,<br><strong style="font-size:18px;color:#5A0E0E;">Vamsikrishna &amp; Meenakshi</strong>
     </p>
+    <p style="font-size:12px;color:#888;text-align:center;margin:20px 0 0;font-family:Arial,sans-serif;">
+      If you don't see this email in your inbox, please check your <strong>Spam</strong> or <strong>Promotions</strong> folder and mark it as Not Spam.
+    </p>
   </td></tr>
   <tr><td style="background:#FDE9C8;padding:16px 36px;text-align:center;border-top:1px solid rgba(201,150,46,.2);">
     <a href="${SITE_URL}" style="font-size:13px;color:#5A0E0A;font-weight:bold;">${SITE_URL}</a>
@@ -137,6 +140,9 @@ function guestHtml({ name, attending }) {
     </table>
     <p style="font-size:15px;color:#3D0C0C;text-align:center;margin:0;font-family:Arial,sans-serif;">
       With love,<br><strong style="font-size:18px;color:#5A0E0E;">Vamsikrishna &amp; Meenakshi 💛</strong>
+    </p>
+    <p style="font-size:12px;color:#888;text-align:center;margin:20px 0 0;font-family:Arial,sans-serif;">
+      If you don't see this email in your inbox, please check your <strong>Spam</strong> or <strong>Promotions</strong> folder and mark it as Not Spam.
     </p>
   </td></tr>
   <tr><td style="background:#FDE9C8;padding:16px 36px;text-align:center;border-top:1px solid rgba(201,150,46,.2);">
@@ -177,12 +183,15 @@ function guestHtml({ name, attending }) {
       </td></tr>
     </table>
     <p style="font-size:14px;color:#3D0C0C;line-height:1.8;margin:0 0 28px;font-family:Arial,sans-serif;">
-      For any questions, please reach out to our coordinator <strong>Venukumar Nadimpalli</strong> at
+      For any questions, please reach out to our friend <strong>Venukumar Nadimpalli</strong> at
       <a href="tel:+14099806777" style="color:#5A0E0E;">+1 (409) 980-6777</a>.
     </p>
     <p style="font-size:15px;color:#3D0C0C;text-align:center;margin:0;font-family:Arial,sans-serif;">
       With heartfelt gratitude,<br>
       <strong style="font-size:18px;color:#5A0E0E;">Vamsikrishna &amp; Meenakshi 💛</strong>
+    </p>
+    <p style="font-size:12px;color:#888;text-align:center;margin:20px 0 0;font-family:Arial,sans-serif;">
+      If you don't see this email in your inbox, please check your <strong>Spam</strong> or <strong>Promotions</strong> folder and mark it as Not Spam.
     </p>
   </td></tr>
   <tr><td style="background:#FDE9C8;padding:16px 36px;text-align:center;border-top:1px solid rgba(201,150,46,.2);">
