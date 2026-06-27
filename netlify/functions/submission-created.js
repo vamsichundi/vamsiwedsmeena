@@ -4,17 +4,19 @@
 //   2. Acknowledgment email to the guest (wording varies by attending status)
 //
 // Required Netlify environment variables:
-//   GMAIL_USER         — your Gmail address (vkchundi@gmail.com)
+//   GMAIL_USER         — chundi.vamsikrishna@gmail.com
 //   GMAIL_APP_PASSWORD — 16-char App Password from myaccount.google.com/apppasswords
 
 import nodemailer from 'nodemailer';
 
-const COUPLE_EMAIL = 'vkchundi@gmail.com';
+const COUPLE_EMAIL = 'chundi.vamsikrishna@gmail.com';
 const SITE_URL = 'https://vamsiwedsmeena.netlify.app';
 
 function createTransport() {
   return nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.GMAIL_USER,
       pass: process.env.GMAIL_APP_PASSWORD,
@@ -195,17 +197,29 @@ function guestHtml({ name, attending }) {
 
 export const handler = async (event) => {
   try {
+    console.log('submission-created fired');
+
     if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
       throw new Error('GMAIL_USER or GMAIL_APP_PASSWORD env var not set');
     }
 
-    const { payload } = JSON.parse(event.body);
-    const data = payload.data || {};
-    const name      = data.name      || 'Guest';
-    const email     = data.email     || '';
-    const attending = (data.attending || 'yes').toLowerCase();
-    const guests    = data.guests    || '1';
-    const message   = data.message   || '';
+    const body = JSON.parse(event.body);
+    const payload = body.payload || {};
+
+    // Only process the rsvp form
+    if (payload.form_name !== 'rsvp') {
+      console.log(`Skipping form: ${payload.form_name}`);
+      return { statusCode: 200, body: 'Not an rsvp submission, skipped' };
+    }
+
+    const data     = payload.data || {};
+    const name     = (data.name      || 'Guest').trim();
+    const email    = (data.email     || '').trim();
+    const attending = (data.attending || 'yes').toLowerCase().trim();
+    const guests   = data.guests    || '1';
+    const message  = data.message   || '';
+
+    console.log(`Processing RSVP: ${name} <${email}> — ${attending}`);
 
     const transporter = createTransport();
     const from = `"Vamsi & Meena Wedding" <${process.env.GMAIL_USER}>`;
@@ -217,6 +231,7 @@ export const handler = async (event) => {
       subject: `New RSVP — ${name} (${attending})`,
       html: notificationHtml({ name, email, attending, guests, message }),
     });
+    console.log('Couple notification sent');
 
     // 2. Acknowledge the guest
     if (email) {
@@ -231,6 +246,7 @@ export const handler = async (event) => {
         subject: subjectMap[attending] || subjectMap.yes,
         html: guestHtml({ name, attending }),
       });
+      console.log(`Guest acknowledgment sent to ${email}`);
     }
 
     return { statusCode: 200, body: 'Emails sent' };
