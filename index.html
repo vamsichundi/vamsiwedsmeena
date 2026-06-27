@@ -794,6 +794,16 @@
   @media (max-width:820px){
     .livestream-wrap{grid-template-columns:1fr;}
   }
+  .livestream-embed-wrap{
+    display:none; margin-top:36px;
+    border-radius:14px; overflow:hidden;
+    border:2px solid var(--gold-soft);
+    box-shadow:0 4px 24px rgba(139,26,26,0.18);
+    width:100%; aspect-ratio:16/9;
+  }
+  .livestream-embed-wrap iframe{
+    width:100%; height:100%; border:none; display:block;
+  }
 
   /* ---------- RSVP ---------- */
   .rsvp-card{
@@ -1448,7 +1458,7 @@
       <div class="livestream-status"><span class="dot"></span> Live on the wedding day</div>
       <h3>Watch the event live</h3>
       <p>We'll be streaming the wedding Muhurtham live for family and friends who can't join us in person.</p>
-      <a id="livestreamBtn" href="https://youtu.be/jqgn-kY0rFA?si=0Fgvx8uBJPVYU-c8" target="_blank" rel="noopener" class="btn btn-primary" style="border-color:var(--gold-bright); color:var(--turmeric); background:var(--kumkum);">Open Live Stream</a>
+      <a id="livestreamBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary" style="border-color:var(--gold-bright); color:var(--turmeric); background:var(--kumkum);">Open Live Stream</a>
       <p id="livestreamNote" style="margin-top:16px; font-size:0.8rem; opacity:0.7;">The live link is shared about 2&ndash;3 hours before the event. Please check back on the morning of Aug 16, 2026.</p>
     </div>
     <div style="text-align:center;">
@@ -1457,6 +1467,9 @@
       </div>
       <div class="qr-caption" id="qrCaption">Scan to watch the live stream</div>
     </div>
+  </div>
+  <div class="livestream-embed-wrap" id="livestreamEmbed">
+    <iframe id="livestreamIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 </section>
 
@@ -1476,9 +1489,9 @@
       </g>
     </svg>
     <h3>Add your photos &amp; videos</h3>
-    <p>Help us capture every moment! Upload your photos and videos from the wedding and other events to our shared iCloud album so everyone can relive the celebration together.</p>
+    <p>Help us capture every moment! Upload your photos and videos from the wedding and other events to our shared Google Photos album so everyone can relive the celebration together.</p>
     <div class="album-btn-row">
-      <a href="#" id="albumOpenBtn" class="btn btn-primary" target="_blank" rel="noopener">
+      <a href="https://photos.app.goo.gl/Fzq5hiLmDUYcPmpM9" id="albumOpenBtn" class="btn btn-primary" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><circle cx="5.5" cy="7" r="1.5"/><path d="M2 12l3.5-4 3 3.5 2-2.5 3.5 3"/></svg>
         Open Album
       </a>
@@ -1492,7 +1505,7 @@
       <div class="album-qr-box" id="albumQr"></div>
       <p class="album-qr-label">Scan to join &amp; add your photos</p>
       <div class="album-link-row">
-        <input class="album-link-input" id="albumLinkInput" type="text" value="" readonly>
+        <input class="album-link-input" id="albumLinkInput" type="text" value="https://photos.app.goo.gl/Fzq5hiLmDUYcPmpM9" readonly>
         <button class="album-copy-btn" id="albumCopyBtn" title="Copy link">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect x="5" y="5" width="9" height="9" rx="1.5"/>
@@ -1669,6 +1682,10 @@
   </div>
   <div class="faq-list">
     <div class="faq-item">
+      <button class="faq-q">How can I share my photos from the wedding? <span class="plus">+</span></button>
+      <div class="faq-a"><p>We'd love to see your photos! You can add them to our shared Google Photos album at <a href="https://photos.app.goo.gl/Fzq5hiLmDUYcPmpM9" target="_blank" rel="noopener">this link</a>. You can also find the QR code and album link in the <a href="#album">Photo Album</a> section of this website.</p></div>
+    </div>
+    <div class="faq-item">
       <button class="faq-q">Can I watch the wedding live online? <span class="plus">+</span></button>
       <div class="faq-a"><p>Yes! We'll be streaming the wedding Muhurtham live on YouTube for family and friends who can't join in person. The live link will be shared about <strong>2–3 hours before the event</strong> on the morning of <strong>Aug 16, 2026</strong>. You can find the link in the <a href="#livestream">Live Stream</a> section of this website.</p></div>
     </div>
@@ -1815,6 +1832,11 @@
        { "url": "https://youtube.com/live/xxxx" }
      ============================================================ */
 
+  function youtubeEmbedUrl(url){
+    var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|live\/|embed\/))([A-Za-z0-9_-]{11})/);
+    return m ? 'https://www.youtube.com/embed/' + m[1] + '?autoplay=0&rel=0' : null;
+  }
+
   function activateLivestream(url){
     const btn = document.getElementById('livestreamBtn');
     const note = document.getElementById('livestreamNote');
@@ -1822,6 +1844,8 @@
     const qrCaption = document.getElementById('qrCaption');
     const liveFloat = document.getElementById('liveFloat');
     const liveFloatTip = document.getElementById('liveFloatTip');
+    const embedWrap = document.getElementById('livestreamEmbed');
+    const iframe = document.getElementById('livestreamIframe');
     if(!btn) return;
 
     url = (url || '').trim();
@@ -1837,12 +1861,22 @@
       btn.removeAttribute('aria-disabled');
       btn.textContent = 'Open Live Stream';
       if(note){ note.textContent = "We're live! Tap the button above or scan the QR code to watch."; }
-      if(qrBox){
-        qrBox.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='
-          + encodeURIComponent(url)
-          + '" alt="Live stream QR code" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
+      if(qrBox && typeof QRCode !== 'undefined'){
+        qrBox.innerHTML = '';
+        new QRCode(qrBox, {
+          text: url,
+          width: 148, height: 148,
+          colorDark: '#5A0E0E', colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
       }
       if(qrCaption){ qrCaption.textContent = 'Scan to watch the live stream'; }
+      // Show YouTube embed
+      var embedSrc = youtubeEmbedUrl(url);
+      if(embedWrap && iframe && embedSrc){
+        iframe.src = embedSrc;
+        embedWrap.style.display = 'block';
+      }
       // Floating camera button -> opens the live stream directly
       if(liveFloat){
         liveFloat.href = url;
@@ -1861,6 +1895,20 @@
       btn.style.cursor = 'default';
       btn.textContent = 'Live link coming soon';
       btn.setAttribute('aria-disabled', 'true');
+      // Show a placeholder QR code pointing to this wedding website
+      if(qrBox && typeof QRCode !== 'undefined'){
+        qrBox.innerHTML = '';
+        new QRCode(qrBox, {
+          text: window.location.href.split('#')[0],
+          width: 148, height: 148,
+          colorDark: '#5A0E0E', colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }
+      if(qrCaption){ qrCaption.textContent = 'Live QR coming soon — scan to visit the wedding website'; }
+      // Hide embed when no URL
+      if(embedWrap){ embedWrap.style.display = 'none'; }
+      if(iframe){ iframe.src = ''; }
       // Floating camera button -> just scrolls to the section
       if(liveFloat){
         liveFloat.href = '#livestream';
@@ -1875,8 +1923,11 @@
 
   // Fetch the link from livestream.json (cache-busted so updates show up fast)
   fetch('livestream.json?_=' + Date.now(), { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : { url: '' })
-    .then(data => activateLivestream(data && data.url))
+    .then(r => r.ok ? r.json() : Promise.reject('not ok'))
+    .then(data => {
+      var u = (data && data.url) ? data.url.trim() : '';
+      activateLivestream(u);
+    })
     .catch(() => activateLivestream(''));
 
   // ---- Mobile nav ----
@@ -2094,8 +2145,10 @@
     }
   })();
 
-  // ---- Album QR code (url loaded from config.json) ----
+  // ---- Album QR code ----
   (function(){
+    var ALBUM_URL = 'https://photos.app.goo.gl/Fzq5hiLmDUYcPmpM9';
+
     function applyAlbumUrl(url){
       url = (url || '').trim();
       if(!url) return;
@@ -2111,6 +2164,7 @@
       if(linkInput){ linkInput.value = url; }
 
       if(qrEl && typeof QRCode !== 'undefined'){
+        qrEl.innerHTML = '';
         new QRCode(qrEl, {
           text: url,
           width: 148, height: 148,
@@ -2149,9 +2203,10 @@
       }
     }
 
+    applyAlbumUrl(ALBUM_URL);
     fetch('config.json?_=' + Date.now(), { cache: 'no-store' })
       .then(function(r){ return r.json(); })
-      .then(function(cfg){ applyAlbumUrl(cfg.albumUrl); })
+      .then(function(cfg){ if(cfg.albumUrl) applyAlbumUrl(cfg.albumUrl); })
       .catch(function(){});
   })();
 
